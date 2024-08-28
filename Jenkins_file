@@ -3,6 +3,7 @@ pipeline{
     environment{
         registry = "pavansamu/sample_images"
         registryCredent = "dockerhub"
+        PREVS_TAG = "V($BUILD_NUMBER-1)"
     }
     stages{
    //     stage("Clone the code"){
@@ -27,6 +28,17 @@ pipeline{
                 sh "docker login -u pavansamu -p Pavank@123 "
                 sh "docker push pavansamu/sample_jenkins:V$BUILD_NUMBER"
             
+            }
+        }
+        stage("docker cont"){
+            steps{
+                sh "docker run -itd --name sample_docker -p 80:80 sample_jenkins:V$BUILD_NUMBER"
+            }
+        }
+        stage("cleanup"){
+            steps{
+                sh "docker rmi sample_jenkins:$PREVS_TAG"
+                
             }
         }
     }
