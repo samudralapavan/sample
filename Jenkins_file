@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    environment{
+        registry = "pavansamu/sample_images"
+        registryCredent = "dockerhub"
+    }
+    stages{
+   //     stage("Clone the code"){
+     //       steps{
+       //       sh "git clone -b master https://github.com/samudralapavan/sample.git"
+         //   }
+        //}
+        
+        stage("build the docker image"){
+            steps{
+                script{
+                    sh "docker build -t sample_jenkins:V$BUILD_NUMBER ."
+                    
+                
+                }
+                
+            }
+        }
+        stage("push the code"){
+            steps{
+                sh "docker tag sample_jenkins:V$BUILD_NUMBER pavansamu/sample_jenkins:V$BUILD_NUMBER "
+                sh "docker login -u pavansamu -p Pavank@123 "
+                sh "docker push pavansamu/sample_jenkins:V$BUILD_NUMBER"
+            
+            }
+        }
+    }
+}
