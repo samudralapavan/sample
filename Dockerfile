@@ -8,4 +8,4 @@ RUN git clone https://github.com/samudralapavan/sample.git
 
 COPY /app/* /var/www/html
 
-CMD ["apache2ctl","-D","FORGROUND"]
+CMD ["apache2ctl","-D","FOREGROUND"]
